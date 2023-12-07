@@ -12,20 +12,24 @@ namespace Practice
         static void Main(string[] args)
         {
             string str = Convert.ToString(Console.ReadLine());
-            string[] words = str.Split(new char[] { ' ' });
-            int a = str.Length;
-            if (a / 2 == 0)
+            if (str.Length % 2 == 0)
             {
-                str = str.Substring(a/2);
-                
-
+                string firstHalf = str.Substring(0, str.Length / 2);
+                string secondHalf = str.Substring(str.Length / 2);
+                char[] firstHalfArray = firstHalf.ToCharArray();
+                Array.Reverse(firstHalfArray);
+                char[] secondHalfArray = secondHalf.ToCharArray();
+                Array.Reverse(secondHalfArray);
+                string reversedString = new string(firstHalfArray) + new string(secondHalfArray);
+                Console.WriteLine(reversedString);
             }
-            foreach (string s in words)
+            else
             {
-                Console.WriteLine(s);
+                char[] strArray = str.ToCharArray();
+                Array.Reverse(strArray);
+                string resultString = new string(strArray) + str;
+                Console.WriteLine(resultString);
             }
-            Console.WriteLine(words);
-
 
         }
     }
