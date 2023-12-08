@@ -57,6 +57,7 @@ namespace Practice
 
                 stringArray = reversedString.ToCharArray();
             }
+
             else
             {
                 char[] strArray = str.ToCharArray();
@@ -76,10 +77,12 @@ namespace Practice
             {
                 QuickSortString.QuickSort(stringArray, 0, stringArray.Length - 1);
             }
+
             else if (choice == 2)
             {
                 treeSortAlgorithm.Sort(stringArray);
             }
+
             else
             {
                 Console.WriteLine("Неверный выбор алгоритма сортировки");
@@ -88,7 +91,6 @@ namespace Practice
             string sortedString = new string(stringArray);
             Console.WriteLine("Отсортированная строка: " + sortedString);
         }
-
 
         static string FindLargestSubstring(string s)
         {
