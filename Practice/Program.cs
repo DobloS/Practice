@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -72,23 +73,52 @@ namespace Practice
                 stringArray = resultString.ToCharArray();
             }
 
+            char[] sortedString = new char [stringArray.Length]; 
+            stringArray.CopyTo(sortedString, 0);
             if (choice == 1)
             {
-                QuickSortString.QuickSort(stringArray, 0, stringArray.Length - 1);
+                QuickSortString.QuickSort(sortedString, 0, sortedString.Length - 1);
             }
             else if (choice == 2)
             {
-                treeSortAlgorithm.Sort(stringArray);
+                treeSortAlgorithm.Sort(sortedString);
             }
             else
             {
                 Console.WriteLine("Неверный выбор алгоритма сортировки");
             }
 
-            string sortedString = new string(stringArray);
-            Console.WriteLine("Отсортированная строка: " + sortedString);
+            Console.WriteLine("Отсортированная строка: " + new string(sortedString));
+
+            string newString = new string(stringArray);
+            int randomNumber = int.Parse(GetRandomNumber(newString.Length).Result);
+            Console.WriteLine("Строка с случайно удаленным символом: ", newString.Remove(randomNumber, 1));
         }
 
+        static async Task<string> GetRandomNumber(int lenMax)
+        {
+            lenMax -= 1;
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    string apiUrl = "https://www.random.org/integers/?num=1&min=0&max=" + lenMax.ToString() + "&col=1&base=10&format=plain&rnd=new";
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        return await response.Content.ReadAsStringAsync();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка при обращении к удаленному API: {ex.Message}");
+            }
+
+            Random random = new Random();
+            return random.Next(1, 1000).ToString();
+        }
 
         static string FindLargestSubstring(string s)
         {
