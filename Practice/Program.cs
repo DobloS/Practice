@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -36,6 +37,7 @@ namespace Practice
                 Array.Reverse(secondHalfArray);
                 string reversedString = new string(firstHalfArray) + new string(secondHalfArray);
                 Console.WriteLine(reversedString);
+                a(reversedString);
             }
 
             else
@@ -44,6 +46,15 @@ namespace Practice
                 Array.Reverse(strArray);
                 string resultString = new string(strArray) + str;
                 Console.WriteLine(resultString);
+                a(resultString);
+            }
+        }
+        public static void a(string str)
+        {
+            foreach (var item in str.Distinct().ToArray())
+            {
+                var count = str.Count(chr => chr == item);
+                Console.WriteLine("Количество символов {0} = {1}", item, count);
             }
         }
 
@@ -65,7 +76,6 @@ namespace Practice
                 return ' ';
             }
         }
-
     }
 
     class AlphabetException : Exception
