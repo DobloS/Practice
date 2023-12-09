@@ -92,7 +92,7 @@ namespace Practice
 
             string newString = new string(stringArray);
             int randomNumber = int.Parse(GetRandomNumber(newString.Length).Result);
-            Console.WriteLine("Строка с случайно удаленным символом: ", newString.Remove(randomNumber, 1));
+            Console.WriteLine(newString.Remove(randomNumber, 1));
         }
 
         static async Task<string> GetRandomNumber(int lenMax)
