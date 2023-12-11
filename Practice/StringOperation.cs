@@ -12,7 +12,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace Practice
 {
-    internal class Program
+    public class StringOperation
     {
         static void Main(string[] args)
         {
@@ -33,8 +33,29 @@ namespace Practice
             Console.WriteLine("1) Быстрая сортировка (QuickSort)");
             Console.WriteLine("2) Сортировка бинарным деревом (TreeSort)");
 
+            ProcessedString(str);
             var choice = int.Parse(Console.ReadLine());
+            var sortedString = str.ToCharArray();
+            if (choice == 1)
+            {
+                QuickSortString.QuickSort(sortedString, 0, sortedString.Length - 1);
+                Console.WriteLine("Отсортированная строка: " + new string(sortedString));
+            }
 
+            else if (choice == 2)
+            {
+                treeSortAlgorithm.Sort(sortedString);
+                Console.WriteLine("Отсортированная строка: " + new string(sortedString));
+            }
+
+            else
+            {
+                Console.WriteLine("Неверный выбор алгоритма сортировки");
+            }
+        }
+
+        public static string ProcessedString(string str)
+        {
             char[] stringArray;
 
             if (str.Length % 2 == 0)
@@ -55,7 +76,7 @@ namespace Practice
                 string temp = FindLargestSubstring(reversedString);
                 Console.WriteLine("Наибольшая подстрока начинающаяся и оканчивающаяся на гласную: " + temp);
 
-                stringArray = reversedString.ToCharArray();
+                return reversedString;
             }
 
             else
@@ -70,39 +91,22 @@ namespace Practice
 
                 string temp = FindLargestSubstring(resultString);
                 Console.WriteLine("Наибольшая подстрока начинающаяся и оканчивающаяся на гласную: " + temp);
-                stringArray = resultString.ToCharArray();
-            }
 
-            if (choice == 1)
-            {
-                QuickSortString.QuickSort(stringArray, 0, stringArray.Length - 1);
+                return resultString;
             }
-
-            else if (choice == 2)
-            {
-                treeSortAlgorithm.Sort(stringArray);
-            }
-
-            else
-            {
-                Console.WriteLine("Неверный выбор алгоритма сортировки");
-            }
-
-            string sortedString = new string(stringArray);
-            Console.WriteLine("Отсортированная строка: " + sortedString);
         }
 
-        static string FindLargestSubstring(string s)
+        public static string FindLargestSubstring(string str)
         {
             string vowels = "aeiouy";
             string maxSubstring = "";
-            for (int i = 0; i < s.Length; i++)
+            for (int i = 0; i < str.Length; i++)
             {
-                for (int j = i; j < s.Length; j++)
+                for (int j = i; j < str.Length; j++)
                 {
-                    if (vowels.Contains(s[i]) && vowels.Contains(s[j]))
+                    if (vowels.Contains(str[i]) && vowels.Contains(str[j]))
                     {
-                        string substring = s.Substring(i, j - i + 1);
+                        string substring = str.Substring(i, j - i + 1);
                         if (substring.Length > maxSubstring.Length)
                         {
                             maxSubstring = substring;
@@ -112,14 +116,16 @@ namespace Practice
             }
             return maxSubstring;
         }
-    
-        public static void GetCountChar(string str)
+
+        public static List<string> GetCountChar(string str)
         {
+            List<string> list = new List<string>();
             foreach (var item in str.Distinct().ToArray())
             {
                 var count = str.Count(chr => chr == item);
-                Console.WriteLine("Количество символов {0} = {1}", item, count);
+                list.Add(item + " " + count);
             }
+            return list;
         }
 
         public static bool CheckAlphabet(string str)
@@ -155,7 +161,7 @@ namespace Practice
         }
     }
 
-    class TreeSortAlgorithm
+    public class TreeSortAlgorithm
     {
         private TreeNode root;
 
@@ -212,7 +218,7 @@ namespace Practice
         }
     }
 
-    class QuickSortString
+    public class QuickSortString
     {
         public static void QuickSort(char[] array, int low, int high)
         {
